@@ -1,0 +1,29 @@
+.main {
+  width: 330px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 45px;
+  background: white;
+  border-radius: 40px;
+  position: relative;
+}
+
+.title {
+  font-family: 'Roboto Mono', sans-serif;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 42px;
+  color: #000000;
+  margin-bottom: 32px;
+}
+
+.login {
+  font-family: 'Roboto Mono', sans-serif;
+  font-style: normal;
+  font-weight: 100;
+  text-decoration: underline;
+  cursor: pointer;
+  color: #2196f3;
+  user-select: none;
+}

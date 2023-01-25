@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.module.scss';
+import Grid2 from "@mui/material/Unstable_Grid2";
+import Header from "./components/header/Header";
+import Drawer from "./components/drawer/Drawer";
+import {Route, Routes} from "react-router-dom";
+import {Box} from "@mui/material";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Prices from "./pages/prices/Prices";
+import { routes } from "./helpers/routes";
+import Account from "./pages/account/Account";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box sx={{ display: 'flex' }}>
+      <Drawer/>
+      <Box
+        component="main"
+        sx={{ flexGrow: 1 }}
+      >
+        <Header />
+        <Grid2 container p={2}>
+          <Routes>
+            <Route path={routes.dashboard} element={<Dashboard />} />
+            <Route path={routes.prices} element={<Prices />} />
+            <Route path={routes.account} element={<Account />} />
+          </Routes>
+        </Grid2>
+      </Box>
+    </Box>
   );
 }
 

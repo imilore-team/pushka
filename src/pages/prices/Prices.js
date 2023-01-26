@@ -4,7 +4,7 @@ import PriceExample from "../../components/priceExample/PriceExample";
 
 const Prices = () => {
   return (
-    <>
+    <Grid container display={'flex'} flexDirection={'column'}>
       <Grid pb={3}>
         <PriceExample />
       </Grid>
@@ -17,7 +17,7 @@ const Prices = () => {
       <Grid pb={3}>
         <PriceExample />
       </Grid>
-    </>
+    </Grid>
   );
 };
 

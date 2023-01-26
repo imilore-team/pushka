@@ -8,6 +8,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import Prices from "./pages/prices/Prices";
 import { routes } from "./helpers/routes";
 import Account from "./pages/account/Account";
+import Landing from "./pages/landing/Landing";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path={routes.dashboard} element={<Dashboard />} />
             <Route path={routes.prices} element={<Prices />} />
             <Route path={routes.account} element={<Account />} />
+            <Route path={routes.main} element={<Landing />} />
           </Routes>
         </Grid2>
       </Box>

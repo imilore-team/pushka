@@ -25,7 +25,7 @@ function App() {
         <Header />
         <Grid2 container p={2}>
           <Routes>
-            <Route path={routes.dashboard} element={<Dashboard />} />
+            <Route path={`${routes.dashboard}/:id`} element={<Dashboard />} />
             <Route path={routes.prices} element={<Prices />} />
             <Route path={routes.account} element={<Account />} />
           </Routes>

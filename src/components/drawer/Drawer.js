@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Grid2 from "@mui/material/Unstable_Grid2";
 import {Drawer as MuiDrawer} from "@mui/material";
 import styles from "./Drawer.module.scss";
@@ -7,9 +7,12 @@ import {Link} from "react-router-dom";
 import { routes } from '../../helpers/routes';
 import {useOpenPopup} from "../../hooks/useOpenPopup";
 import {getEnums} from "../../helpers/getParams";
+import useLocalStorage from "use-local-storage";
+import {getDisks} from "../../helpers/api/getDisks";
 
 const Drawer = ({ variant, isOpen, close }) => {
   const [isContactUsModalOpen, setIsContactUsModalOpen] = useState(false);
+  const [disks, setDisks] = useLocalStorage("disks-app-drawer", []);
   const openPopup = useOpenPopup();
 
   const onContactUsClick = useCallback(() => {
@@ -18,6 +21,20 @@ const Drawer = ({ variant, isOpen, close }) => {
     }
     openPopup(getEnums.popup.contact);
   }, [isContactUsModalOpen, openPopup, close]);
+
+  useEffect(() => {
+    getDisks()
+      .then((disks) => {
+        const formattedDisks = disks.map((disk) => {
+          return {
+            id: disk.id,
+            label: disk.title
+          }
+        });
+
+        setDisks(formattedDisks);
+      })
+  }, []);
 
   return (
     <MuiDrawer
@@ -50,17 +67,7 @@ const Drawer = ({ variant, isOpen, close }) => {
         <Field
           label={'Dashboard'}
           close={close}
-          childFields={[
-            {
-              label: 'server 1'
-            },
-            {
-              label: 'server 2'
-            },
-            {
-              label: 'server 3'
-            },
-          ]}
+          childFields={disks}
         />
         <Field label={'Contact us'} onClick={onContactUsClick}/>
       </Grid2>

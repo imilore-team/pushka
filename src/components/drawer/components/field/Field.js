@@ -33,8 +33,8 @@ const Field = ({ label, onClick, childFields, close }) => {
           </IconButton>
         </div>}
       </div>
-      {isExpanded && childFields?.map(({ label }, index) => (
-        <Link to={routes.dashboard}>
+      {isExpanded && childFields?.map(({ label, id }, index) => (
+        <Link to={`${routes.dashboard}/${id}`}>
           <div className={styles.item} key={index} onClick={close}>
             {label}
           </div>

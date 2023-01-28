@@ -9,9 +9,9 @@ const ChartLoader = () => {
         className={styles.header}
         variant={'rectangular'}
       />
-      <Skeleton variant={'text'} width={'40%'}/>
-      <Skeleton variant={'text'} width={'90%'}/>
-      <Skeleton variant={'text'} width={'60%'}/>
+      <Skeleton className={styles.line} variant={'text'} width={'40%'}/>
+      <Skeleton className={styles.line} variant={'text'} width={'90%'}/>
+      <Skeleton className={styles.line} variant={'text'} width={'60%'}/>
       <Skeleton
         className={styles.body}
         variant={'rectangular'}

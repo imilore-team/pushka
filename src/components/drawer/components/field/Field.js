@@ -6,7 +6,7 @@ import {IconButton} from "@mui/material";
 import {Link} from "react-router-dom";
 import { routes } from "../../../../helpers/routes";
 
-const Field = ({ label, onClick, childFields }) => {
+const Field = ({ label, onClick, childFields, close }) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
   const handler = useCallback(() => {
@@ -33,9 +33,9 @@ const Field = ({ label, onClick, childFields }) => {
           </IconButton>
         </div>}
       </div>
-      {isExpanded && childFields?.map(({ label, onClick }, index) => (
+      {isExpanded && childFields?.map(({ label }, index) => (
         <Link to={routes.dashboard}>
-          <div className={styles.item} key={index} onClick={onClick}>
+          <div className={styles.item} key={index} onClick={close}>
             {label}
           </div>
         </Link>

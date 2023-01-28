@@ -1,17 +1,19 @@
 .main {
-  width: 800px;
-  max-width: 90%;
+  max-width: 800px;
+}
+
+.line {
+  height: 30px !important;
 }
 
 .header {
   border-radius: 8px;
   height: 40px !important;
-  width: 520px !important;
+  max-width: 520px !important;
 }
 
 .body {
   border-radius: 8px;
   height: 250px !important;
-  width: 90% !important;
-  max-width: 90% !important;
+  max-width: 520px !important;
 }

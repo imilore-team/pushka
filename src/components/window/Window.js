@@ -5,7 +5,7 @@ import Close from "../../icons/Close";
 
 const Window = ({children, close, isOpen, width, height}) => {
   return (
-    <Backdrop onClose={close} open={isOpen}>
+    <Backdrop sx={{ zIndex: 100000 }} onClose={close} open={isOpen}>
       <div className={styles.main} style={{ width, height }}>
         <Grid
           position={'absolute'}

@@ -3,7 +3,28 @@ import ChartLoader from "../../components/chartLoader/ChartLoader";
 import {Grid} from "@mui/material";
 import {useParams} from "react-router-dom";
 import {getDisk} from "../../helpers/api/getDisk";
-import Chart from "react-apexcharts";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import moment from "moment";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Dashboard = () => {
   const [disk, setDisk] = useState();
@@ -22,95 +43,53 @@ const Dashboard = () => {
       })
   }, [id])
 
-  const values = useMemo(() => {
+  const data = useMemo(() => {
     if (!disk?.data) {
-      return []
+      return;
     }
 
-    return Array.from(disk?.data.slice(-1000).map((disk) => {
-      return disk.value;
-    }))
-  }, [disk])
+    return {
+      labels: [...disk?.data?.map(({ time }) => moment(time, "YYYY-MM-DDTHH:mm:ss").format("DD.MM.YY"))],
+      datasets: [
+        {
+          label: disk.title,
+          data: [...disk?.data?.map(({ value }) => Number(value))],
+          borderColor: [...disk?.data?.map(({ error, warn }) => {
+            if (!error && !warn) {
+              return '#36a2eb'
+            }
 
-  const categories = useMemo(() => {
-    if (!disk?.data) {
-      return []
+            if (warn) {
+              return 'orange'
+            }
+
+            if (error) {
+              return 'red';
+            }
+          })],
+          backgroundColor: [...disk?.data?.map(({ error, warn }) => {
+            if (!error && !warn) {
+              return '#36a2eb'
+            }
+
+            if (error) {
+              return 'red';
+            }
+
+            if (warn) {
+              return 'orange'
+            }
+          })],
+        }
+      ],
     }
-
-    return Array.from(disk?.data.slice(-1000).map((disk) => {
-      return disk.time;
-    }))
-  }, [disk])
-
-  const colors = useMemo(() => {
-    if (!disk?.data) {
-      return []
-    }
-
-    return Array.from(disk?.data.slice(-1000).map((disk) => {
-      if (disk.error) {
-        return 'red';
-      }
-
-      if (disk.warn) {
-        return 'yellow';
-      }
-
-      return '#1A73E8';
-    }))
-  })
-
+  }, [disk]);
 
   return (
     <Grid container direction={'column'}>
       {disk && !isLoading && <>
-        <div style={{ maxWidth: '100%' }}>
-          <Chart
-            series={[
-              {
-                data: values
-              }
-            ]}
-            options={{
-              fill: {
-                colors
-              },
-              chart: {
-                type: 'area',
-                stacked: false,
-                height: 350,
-                zoom: {
-                  type: 'x',
-                  enabled: true,
-                  autoScaleYaxis: true
-                },
-                toolbar: {
-                  autoSelected: 'zoom'
-                }
-              },
-              dataLabels: {
-                enabled: false
-              },
-              stroke: {
-                curve: 'straight'
-              },
-              title: {
-                text: disk?.title,
-                align: 'left'
-              },
-              grid: {
-                row: {
-                  colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                  opacity: 0.5
-                },
-              },
-              xaxis: {
-                categories
-              }
-            }}
-            type="line"
-            height={400}
-          />
+        <div style={{ width: '100%', height: '800px'}}>
+          <Line data={data} height={'100%'}/>
         </div>
       </>}
       {isLoading && <>
